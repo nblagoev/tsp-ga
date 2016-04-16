@@ -6,7 +6,7 @@ import webFrame from 'web-frame';
 import {ipcRenderer} from 'electron';
 
 import { configureStore } from './store/configureStore';
-import { Root } from './containers/Root';
+import Root from './containers/Root';
 
 import ContextMenu from './menus/context-menu.json';
 import City from './tsp/city';
@@ -63,12 +63,14 @@ import {evolvePopulation} from './tsp/genetic-algorithm';
 // react entry point
 (() => {
   const store = configureStore({
-    numberOfCities = 20,
-    numberOfGenerations = 100,
-    populationSize = 50,
-    mutationRate = 0.015,
-    selectionSize = 5,
-    elitismEnabled = true
+    settings: {
+      numberOfCities: 20,
+      numberOfGenerations: 100,
+      populationSize: 50,
+      mutationRate: 0.015,
+      selectionSize: 5,
+      elitismEnabled: true
+    }
   });
   ReactDOM.render(
     <Root store={store} />,

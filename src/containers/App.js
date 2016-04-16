@@ -14,13 +14,13 @@ import City from '../tsp/city';
 export default class App extends Component {
   static propTypes = {
     cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
-    evolvedPopulation: PropTypes.instanceOf(Population).isRequired,
+    evolvedPopulation: PropTypes.instanceOf(Population),//.isRequired,
     settings: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   }
 
   render() {
-    const { cities, evolvedPopulation, actions } = this.props;
+    const { cities, evolvedPopulation, settings, actions } = this.props;
     return (
       <div class="container">
       	<div class="row">
@@ -28,7 +28,7 @@ export default class App extends Component {
       			<Canvas cities={cities} evolvedPopulation={evolvedPopulation} />
       		</div>
           <div class="col-md-3">
-      			<Params settings={settings} actions={actions} />
+      			{<Params settings={settings} actions={actions} />}
       		</div>
       	</div>
       </div>
