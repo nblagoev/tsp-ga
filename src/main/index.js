@@ -16,15 +16,20 @@ const {argv} = require('yargs')
                 .alias('d', 'debug')
                 .describe('d', 'Run in debug mode')
 
-                .alias('W', 'grid-width')
-                .nargs('W', 1)
-                .default('W', 200)
-                .describe('W', 'The maximum value of the x coordinate')
+                .alias('c', 'cities')
+                .nargs('c', 1)
+                .default('c', 20)
+                .describe('c', 'The number of cities')
 
-                .alias('H', 'grid-height')
-                .nargs('H', 1)
-                .default('H', 200)
-                .describe('H', 'The maximum value of the y coordinate')
+                .alias('g', 'generations')
+                .nargs('g', 1)
+                .default('g', 200)
+                .describe('g', "The total number of generations")
+
+                .alias('p', 'population-size')
+                .nargs('p', 1)
+                .default('p', 50)
+                .describe('p', "The size of the population")
 
                 .alias('m', 'mutation-rate')
                 .nargs('m', 1)
@@ -154,10 +159,10 @@ ipc.on('application:message-box', function(event, options) {
 function onReady(fun) {
   let {width, height} = require('screen').getPrimaryDisplay().workAreaSize;
   let options = {
-    width: width * 0.75,
-    height: height * 0.75,
-    minHeight: height * 0.5,
-    minWidth: width * 0.5,
+    width: Math.floor(width * 0.75),
+    height: Math.floor(height * 0.75),
+    minHeight: Math.floor(height * 0.5),
+    minWidth: Math.floor(width * 0.5),
     resizable: true,
     webPreferences: {
       blinkFeatures: 'OverlayScrollbars',

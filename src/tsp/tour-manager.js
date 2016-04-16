@@ -1,19 +1,20 @@
 
-const destinationCities = [];
 
 export default class TourManager {
+  static destinationCities = [];
+
   // Adds a destination city
   static addCity(city) {
-    destinationCities.push(city);
+    this.destinationCities.push(city);
   }
 
   // Get a city
   static getCity(index) {
-    return destinationCities[index];
+    return this.destinationCities[index];
   }
 
   // Get the number of destination cities
   static countCities() {
-    return destinationCities.length;
+    return this.destinationCities.length;
   }
 }
