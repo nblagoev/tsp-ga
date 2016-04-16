@@ -28,8 +28,10 @@ export default class Params extends Component {
         <div className="counter-even-label">{this.props.settings.numberOfGenerations}</div>
         <br />
         <div className="counter-buttons">
-          <button onClick={() => {this.generateCities();}}>Generate Cities</button>
-          <button onClick={() => {this.evolvePopulation();}}>Evolve Population</button>
+          <button type="button" className="btn btn-default"
+                  onClick={() => {this.generateCities();}}>Generate Cities</button>
+          <button type="button" className="btn btn-default"
+                  onClick={() => {this.evolvePopulation();}}>Evolve Population</button>
         </div>
       </div>
     );

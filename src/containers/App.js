@@ -22,12 +22,12 @@ export default class App extends Component {
   render() {
     const { cities, evolvedPopulation, settings, actions } = this.props;
     return (
-      <div class="container">
-      	<div class="row">
-      		<div class="col-md-9">
+      <div className="container">
+      	<div className="row">
+      		<div className="col-md-9">
       			<Canvas cities={cities} evolvedPopulation={evolvedPopulation} />
       		</div>
-          <div class="col-md-3">
+          <div className="col-md-3">
       			{<Params settings={settings} actions={actions} />}
       		</div>
       	</div>
