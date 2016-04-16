@@ -120,13 +120,16 @@ app.on('browser-window-focus', (event, window) => {
 ipc.on('application:prompt-on-close', (event, flag) => promptOnClose = flag);
 
 const processParamHandler = (browser) => {
-
-  if (argv.W) {
-    browser.webContents.send('application:grid-width', argv.W);
+  if (argv.c) {
+    browser.webContents.send('application:cities', argv.c);
   }
 
-  if (argv.H) {
-    browser.webContents.send('application:grid-height', argv.H);
+  if (argv.g) {
+    browser.webContents.send('application:generations', argv.g);
+  }
+
+  if (argv.p) {
+    browser.webContents.send('application:population-size', argv.p);
   }
 
   if (argv.m) {
