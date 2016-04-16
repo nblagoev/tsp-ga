@@ -12,15 +12,19 @@ export default class Canvas extends Component {
     super(props, context);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    var context = this.canvas.getContext("2d");
+    context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    for (let city of this.props.cities) {
+      context.beginPath();
+      context.arc(city.x, city.y, 1, 0, 2 * Math.PI, true);
+      context.fill();
+    }
+  }
+
   render() {
-    const { cities, evolvedPopulation } = this.props;
     return (
-      <div>
-        <h2>cities: {cities.length}</h2>
-        <ul>
-          { cities.map(city => <li>{city.x}, {city.y}</li>) }
-        </ul>
-      </div>
+      <canvas ref={(ref) => this.canvas = ref} width="200" height="200"/>
     );
   }
 }
