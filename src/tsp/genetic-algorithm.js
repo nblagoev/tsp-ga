@@ -11,6 +11,10 @@ export default class GeneticAlgorithm {
     this.elitism = elitism;
   }
 
+  setCities(cities) {
+    this.cities = cities;
+  }
+
   // Evolves a population over one generation
   evolvePopulation(pop) {
     let newPopulation = new Population(pop.size(), false);
@@ -46,7 +50,7 @@ export default class GeneticAlgorithm {
   // Applies crossover to a set of parents and creates offspring
   crossover(parent1, parent2) {
     // Create new child tour
-    let child = new Tour();
+    let child = new Tour(this.cities);
 
     // Get start and end sub tour positions for parent1's tour
     let startPos = Math.floor(Math.random() * parent1.tourSize);

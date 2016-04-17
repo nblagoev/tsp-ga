@@ -4,13 +4,13 @@ import Tour from './tour';
 export default class Population {
 
     // Construct a population
-    constructor(populationSize, initialize) {
+    constructor(populationSize, initialize, cities) {
       this.tours = new Array(populationSize);
       // If we need to initialize a population of tours do so
       if (initialize === true) {
         // Loop and create individuals
         for (let i = 0; i < this.size(); i++) {
-          let newTour = new Tour();
+          let newTour = new Tour(cities);
           newTour.generateIndividual();
           this.saveTour(i, newTour);
         }

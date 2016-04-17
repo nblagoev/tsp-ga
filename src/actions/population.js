@@ -5,7 +5,8 @@ const evolvePopulation = (
   populationSize,
   mutationRate,
   selectionSize,
-  elitismEnabled
+  elitismEnabled,
+  cities
 ) => ({
   type: EVOLVE_POPULATION,
   generations,
@@ -13,6 +14,7 @@ const evolvePopulation = (
   mutationRate,
   selectionSize,
   elitismEnabled,
+  cities,
 });
 
 export { EVOLVE_POPULATION, evolvePopulation };

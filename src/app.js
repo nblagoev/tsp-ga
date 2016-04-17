@@ -7,12 +7,7 @@ import {ipcRenderer} from 'electron';
 
 import { configureStore } from './store/configureStore';
 import Root from './containers/Root';
-
 import ContextMenu from './menus/context-menu.json';
-import City from './tsp/city';
-import Population from './tsp/population';
-import TourManager from './tsp/tour-manager';
-import GeneticAlgorithm from './tsp/genetic-algorithm';
 
 (() => {
 
@@ -37,28 +32,6 @@ import GeneticAlgorithm from './tsp/genetic-algorithm';
     let difference = _.difference(keys, result);
     return difference.length ? result.concat(difference) : result;
   };
-})();
-
-(() => {
-  for (let i = 0; i < 10; i++) {
-    TourManager.addCity(new City(500, 500));
-  }
-
-  // Initialize population
-  let population = new Population(50, true);
-  console.log("Initial distance: " + population.getFittest().getDistance());
-
-  let ga = new GeneticAlgorithm();
-  // Evolve population for 100 generations
-  population = ga.evolvePopulation(population);
-  for (let i = 0; i < 100; i++) {
-      population = ga.evolvePopulation(population);
-  }
-
-  // Print final results
-  console.log("Finished");
-  console.log("Final distance: " + population.getFittest().getDistance());
-  console.log("Solution:" + population.getFittest());
 })();
 
 // react entry point

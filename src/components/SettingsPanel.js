@@ -3,9 +3,11 @@ import NumberInputGroup from './NumberInputGroup';
 import SuccessButtonGroup from './SuccessButtonGroup';
 import PrimaryButtonGroup from './PrimaryButtonGroup';
 import CheckboxGroup from './CheckboxGroup';
+import City from '../tsp/city';
 
 export default class SettingsPanel extends Component {
   static propTypes = {
+    cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
     settings: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
@@ -37,6 +39,7 @@ export default class SettingsPanel extends Component {
       this.state.mutationRate,
       this.state.selectionSize,
       this.state.elitismEnabled,
+      this.props.cities
     );
   }
 

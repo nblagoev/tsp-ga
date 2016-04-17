@@ -6,6 +6,7 @@ export default class CityMap extends Component {
   static propTypes = {
     cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
     evolvedPopulation: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
   };
 
   constructor(props, context) {
@@ -20,6 +21,7 @@ export default class CityMap extends Component {
       context.arc(city.x, city.y, 2, 0, 2 * Math.PI, true);
       context.fill();
     }
+    console.log(this.props.evolvedPopulation);
   }
 
   render() {

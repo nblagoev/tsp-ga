@@ -7,7 +7,8 @@ export default function population(state = {}, action) {
     case EVOLVE_POPULATION: {
       let result = {};
       let ga = new GeneticAlgorithm(action.mutationRate, action.selectionSize, action.elitismEnabled);
-      let population = new Population(action.populationSize, true);
+      ga.setCities(action.cities);
+      let population = new Population(action.populationSize, true, action.cities);
 
       result.initialDistance = population.getFittest().getDistance();
 

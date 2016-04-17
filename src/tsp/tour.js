@@ -5,8 +5,9 @@ import _ from 'lodash';
 
 export default class Tour {
 
-  constructor () {
-    this.tour = new Array(TourManager.countCities());
+  constructor (cities) {
+    this.cities = cities;
+    this.tour = new Array(cities.length);
     this.fitness = 0;
     this.distance = 0;
   }
@@ -14,8 +15,8 @@ export default class Tour {
   // Creates a random individual
   generateIndividual() {
     // Loop through all our destination cities and add them to our tour
-    for (let cityIndex = 0; cityIndex < TourManager.countCities(); cityIndex++) {
-      this.setCity(cityIndex, TourManager.getCity(cityIndex));
+    for (let cityIndex = 0; cityIndex < this.cities.length; cityIndex++) {
+      this.setCity(cityIndex, this.cities[cityIndex]);
     }
 
     // Randomly reorder the tour
