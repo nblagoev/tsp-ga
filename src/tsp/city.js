@@ -1,9 +1,9 @@
 
 export default class City {
   // Constructs a randomly placed city
-  constructor({x, y} = {}) {
-    this.x = x || Math.floor(Math.random() * 200);
-    this.y = y || Math.floor(Math.random() * 200);
+  constructor(limitX, limiY) {
+    this.x = Math.floor(Math.random() * limitX);
+    this.y = Math.floor(Math.random() * limiY);
   }
 
   // Gets the distance to given city

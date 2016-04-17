@@ -6,8 +6,8 @@ import * as CityActions from '../actions/cities';
 import * as SettingsActions from '../actions/settings';
 import * as PopulationActions from '../actions/population';
 
-import Canvas from '../components/Canvas';
-import Params from '../components/Params';
+import CityMap from '../components/CityMap';
+import SettingsPanel from '../components/SettingsPanel';
 import Population from '../tsp/population';
 import City from '../tsp/city';
 
@@ -24,11 +24,11 @@ export default class App extends Component {
     return (
       <div className="container">
       	<div className="row">
-      		<div className="col-md-9">
-      			<Canvas cities={cities} evolvedPopulation={evolvedPopulation} />
+      		<div className="col-md-9 mainContainer">
+      			<CityMap cities={cities} evolvedPopulation={evolvedPopulation} settings={settings} />
       		</div>
           <div className="col-md-3">
-      			{<Params settings={settings} actions={actions} />}
+      			<SettingsPanel settings={settings} actions={actions} />
       		</div>
       	</div>
       </div>
@@ -39,7 +39,7 @@ export default class App extends Component {
 /**
  * Keep in mind that 'state' isn't the state of local object, but your single
  * state in this Redux application. 'cities' is a property within our store/state
- * object. By mapping it to props, we can pass it to the child component Canvas.
+ * object. By mapping it to props, we can pass it to the child component CityMap.
  */
 function mapStateToProps(state) {
   return {
@@ -60,8 +60,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
-      // { ...SettingsActions ...CityActions, ...PopulationActions },
-      Object.assign({}, SettingsActions, CityActions, PopulationActions),
+      //Object.assign({}, SettingsActions, CityActions, PopulationActions),
+      { ...SettingsActions, ...CityActions, ...PopulationActions },
       dispatch
     )
   };

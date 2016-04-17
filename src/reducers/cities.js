@@ -6,7 +6,7 @@ export default function cities(state = [], action) {
     case GENERATE_CITIES:
       let result = [];
       for (let i = 0; i < action.count; i++) {
-        result.push(new City());
+        result.push(new City(action.limitX, action.limitY));
       }
       return result;
     default:

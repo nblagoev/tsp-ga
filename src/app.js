@@ -41,7 +41,7 @@ import {evolvePopulation} from './tsp/genetic-algorithm';
 
 (() => {
   for (let i = 0; i < 10; i++) {
-    TourManager.addCity(new City());
+    TourManager.addCity(new City(500, 500));
   }
 
   // Initialize population
@@ -69,7 +69,9 @@ import {evolvePopulation} from './tsp/genetic-algorithm';
       populationSize: 50,
       mutationRate: 0.015,
       selectionSize: 5,
-      elitismEnabled: true
+      elitismEnabled: true,
+      limitX: 500,
+      limitY: 500
     }
   });
   ReactDOM.render(

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class Params extends Component {
+export default class SettingsPanel extends Component {
   static propTypes = {
     settings: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
@@ -11,7 +11,11 @@ export default class Params extends Component {
   }
 
   generateCities() {
-    this.props.actions.generateCities(this.props.settings.numberOfCities);
+    this.props.actions.generateCities(
+      this.props.settings.numberOfCities,
+      this.props.settings.limitX - 2,
+      this.props.settings.limitY - 2
+    );
   }
 
   evolvePopulation() {
