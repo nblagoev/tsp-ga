@@ -1,4 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import NumberInputGroup from './NumberInputGroup';
+import SuccessButtonGroup from './SuccessButtonGroup';
+import PrimaryButtonGroup from './PrimaryButtonGroup';
+import CheckboxGroup from './CheckboxGroup';
 
 export default class SettingsPanel extends Component {
   static propTypes = {
@@ -9,7 +13,12 @@ export default class SettingsPanel extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      numberOfCities: 20
+      numberOfCities: 20,
+      numberOfGenerations: 100,
+      populationSize: 50,
+      mutationRate: 0.015,
+      selectionSize: 5,
+      elitismEnabled: true
     };
   }
 
@@ -33,84 +42,54 @@ export default class SettingsPanel extends Component {
     this.setState({numberOfCities: event.target.value});
   }
 
-  render() {
-    const {
-      settings: {
-        numberOfGenerations,
-        populationSize,
-        mutationRate,
-        selectionSize,
-        elitismEnabled
-      }
-    } = this.props;
+  handleGenerationsChange(event) {
+    this.setState({numberOfGenerations: event.target.value});
+  }
 
+  handlePopulationSizeChange(event) {
+    this.setState({populationSize: event.target.value});
+  }
+
+  handleMutationRateChange(event) {
+    this.setState({mutationRate: event.target.value});
+  }
+
+  handleSelectionSizeChange(event) {
+    this.setState({selectionSize: event.target.value});
+  }
+
+  handleElitismChange(event) {
+    this.setState({elitismEnabled: event.target.checked});
+  }
+
+  render() {
     return (
       <div className="clearfix settings-container">
         <form className="form-horizontal" onSubmit={this.handleSubmit}>
-        <fieldset>
-          <legend>Travelling Salesman Problem</legend>
+          <fieldset>
+            <legend>Travelling Salesman Problem</legend>
 
-          <div className="form-group">
-          <label className="col-md-4 control-label" htmlFor="citiesInput">Cities</label>
-          <div className="col-md-6">
-          <input id="citiesInput" name="citiesInput" type="text" value={this.state.numberOfCities}
-                 onChange={(event) => {this.handleCitiesChange(event);}}  className="form-control input-md"/>
-          </div>
-          </div>
+            <NumberInputGroup id="citiesInput" label="Cities" value={this.state.numberOfCities}
+                              onChange={(event) => {this.handleCitiesChange(event);}}/>
 
-          <div className="form-group">
-          <label className="col-md-4 control-label" htmlFor="generationsInput">Generations</label>
-          <div className="col-md-6">
-          <input id="generationsInput" name="generationsInput" type="text" defaultValue={numberOfGenerations} placeholder="100" className="form-control input-md"/>
+            <PrimaryButtonGroup id="generateBtn" label="Generate" onClick={() => {this.generateCities();}}/>
 
-          </div>
-          </div>
+            <NumberInputGroup id="generationsInput" label="Generations" value={this.state.numberOfGenerations}
+                              onChange={(event) => {this.handleGenerationsChange(event);}}/>
 
-          <div className="form-group">
-          <label className="col-md-4 control-label" htmlFor="populationSizeInput">Population Size</label>
-          <div className="col-md-6">
-          <input id="populationSizeInput" name="populationSizeInput" type="text" defaultValue={populationSize} placeholder="50" className="form-control input-md"/>
+            <NumberInputGroup id="populationSizeInput" label="Population Size" value={this.state.populationSize}
+                              onChange={(event) => {this.handlePopulationSizeChange(event);}}/>
 
-          </div>
-          </div>
+            <NumberInputGroup id="mutationRateInput" label="Mutation Rate" value={this.state.mutationRate}
+                              onChange={(event) => {this.handleMutationRateChange(event);}}/>
 
-          <div className="form-group">
-          <label className="col-md-4 control-label" htmlFor="mutationRateInput">Mutation Rate</label>
-          <div className="col-md-6">
-          <input id="mutationRateInput" name="mutationRateInput" type="text" defaultValue={mutationRate} placeholder="0.0015" className="form-control input-md"/>
+            <NumberInputGroup id="selectionSizeInput" label="Selection Size" value={this.state.selectionSize}
+                              onChange={(event) => {this.handleSelectionSizeChange(event);}}/>
 
-          </div>
-          </div>
+            <CheckboxGroup id="elitismCheck" label="Enable Elitism" checked={this.state.elitismEnabled}
+                           onChange={(event) => {this.handleElitismChange(event);}}/>
 
-          <div className="form-group">
-          <label className="col-md-4 control-label" htmlFor="selectionSizeInput">Selection Size</label>
-          <div className="col-md-6">
-          <input id="selectionSizeInput" name="selectionSizeInput" type="text" defaultValue={selectionSize} placeholder="5" className="form-control input-md"/>
-
-          </div>
-          </div>
-
-          <div className="form-group">
-          <label className="col-md-4 control-label" htmlFor="elitismCheck">Elitism</label>
-          <div className="col-md-6">
-            <label className="checkbox-inline" htmlFor="elitismCheck">
-              <input type="checkbox" name="elitismCheck" id="elitismCheck"
-              defaultValue={elitismEnabled}/>
-              Enable
-            </label>
-          </div>
-          </div>
-
-          <div className="form-group">
-          <label className="col-md-4 control-label" htmlFor="generateBtn"></label>
-          <div className="col-md-8">
-            <button id="generateBtn" name="generateBtn" className="btn btn-primary"
-                    onClick={() => {this.generateCities();}}>Generate</button>
-            <span>&nbsp;</span>
-            <button id="evolveBtn" name="evolveBtn" className="btn btn-success"
-                    onClick={() => {this.evolvePopulation();}}>Evolve</button>
-          </div>
-          </div>
+            <SuccessButtonGroup id="evolveBtn" label="Evolve" onClick={() => {this.evolvePopulation();}}/>
 
           </fieldset>
         </form>
