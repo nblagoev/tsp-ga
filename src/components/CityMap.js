@@ -5,7 +5,7 @@ import Population from '../tsp/population';
 export default class CityMap extends Component {
   static propTypes = {
     cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
-    evolvedPopulation: PropTypes.instanceOf(Population),//.isRequired,
+    evolvedPopulation: PropTypes.object.isRequired,
   };
 
   constructor(props, context) {

@@ -2,18 +2,22 @@
 import Population from './population';
 import Tour from './tour';
 
-/* GA parameters */
-const mutationRate = 0.015;
-const tournamentSize = 5;
-const elitism = true;
+
+export default class GeneticAlgorithm {
+  // Constructs a randomly placed city
+  constructor(mutationRate = 0.015, tournamentSize = 5, elitism = true) {
+    this.mutationRate = mutationRate;
+    this.tournamentSize = tournamentSize;
+    this.elitism = elitism;
+  }
 
   // Evolves a population over one generation
-  export function evolvePopulation(pop) {
+  evolvePopulation(pop) {
     let newPopulation = new Population(pop.size(), false);
 
     // Keep our best individual if elitism is enabled
     let elitismOffset = 0;
-    if (elitism) {
+    if (this.elitism) {
       newPopulation.saveTour(0, pop.getFittest());
       elitismOffset = 1;
     }
@@ -23,24 +27,24 @@ const elitism = true;
     // individuals from current population
     for (let i = elitismOffset; i < newPopulation.size(); i++) {
       // Select parents
-      let parent1 = tournamentSelection(pop);
-      let parent2 = tournamentSelection(pop);
+      let parent1 = this.tournamentSelection(pop);
+      let parent2 = this.tournamentSelection(pop);
       // Crossover parents
-      let child = crossover(parent1, parent2);
+      let child = this.crossover(parent1, parent2);
       // Add child to new population
       newPopulation.saveTour(i, child);
     }
 
     // Mutate the new population a bit to add some new genetic material
     for (let i = elitismOffset; i < newPopulation.size(); i++) {
-      mutate(newPopulation.getTour(i));
+      this.mutate(newPopulation.getTour(i));
     }
 
     return newPopulation;
   }
 
   // Applies crossover to a set of parents and creates offspring
-  export function crossover(parent1, parent2) {
+  crossover(parent1, parent2) {
     // Create new child tour
     let child = new Tour();
 
@@ -80,11 +84,11 @@ const elitism = true;
   }
 
   // Mutate a tour using swap mutation
-  export function mutate(tour) {
+  mutate(tour) {
     // Loop through tour cities
     for (let tourPos1=0; tourPos1 < tour.tourSize; tourPos1++){
       // Apply mutation rate
-      if (Math.random() < mutationRate){
+      if (Math.random() < this.mutationRate){
         // Get a second random position in the tour
         let tourPos2 = Math.floor(tour.tourSize * Math.random());
 
@@ -100,11 +104,11 @@ const elitism = true;
   }
 
   // Selects candidate tour for crossover
-  export function tournamentSelection(pop) {
+  tournamentSelection(pop) {
     // Create a tournament population
-    let tournament = new Population(tournamentSize, false);
+    let tournament = new Population(this.tournamentSize, false);
     // For each place in the tournament get a random candidate tour and add it
-    for (let i = 0; i < tournamentSize; i++) {
+    for (let i = 0; i < this.tournamentSize; i++) {
       let randomId = Math.floor(Math.random() * pop.size());
       tournament.saveTour(i, pop.getTour(randomId));
     }
@@ -113,3 +117,4 @@ const elitism = true;
     let fittest = tournament.getFittest();
     return fittest;
   }
+}

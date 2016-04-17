@@ -1,10 +1,27 @@
 import { EVOLVE_POPULATION } from '../actions/population';
+import Population from '../tsp/population';
+import GeneticAlgorithm from '../tsp/genetic-algorithm';
 
-export default function population(state = null, action) {
+export default function population(state = {}, action) {
   switch (action.type) {
-    case EVOLVE_POPULATION:
-      return action.name;
-    default:
+    case EVOLVE_POPULATION: {
+      let result = {};
+      let ga = new GeneticAlgorithm(action.mutationRate, action.selectionSize, action.elitismEnabled);
+      let population = new Population(action.populationSize, true);
+
+      result.initialDistance = population.getFittest().getDistance();
+
+      population = ga.evolvePopulation(population);
+      for (let i = 0; i < action.generations; i++) {
+          population = ga.evolvePopulation(population);
+      }
+
+      //result.evolvedPopulation = evolvedPopulation;
+      result.finalDistance = population.getFittest().getDistance();
+      result.solution = population.getFittest();
+      return result;
+    } default: {
       return state;
+    }
   }
 }

@@ -26,12 +26,18 @@ export default class SettingsPanel extends Component {
     this.props.actions.generateCities(
       this.state.numberOfCities,
       this.props.settings.limitX - 2,
-      this.props.settings.limitY - 2
+      this.props.settings.limitY - 2,
     );
   }
 
   evolvePopulation() {
-    this.props.actions.evolvePopulation(this.state.numberOfGenerations);
+    this.props.actions.evolvePopulation(
+      this.state.numberOfGenerations,
+      this.state.populationSize,
+      this.state.mutationRate,
+      this.state.selectionSize,
+      this.state.elitismEnabled,
+    );
   }
 
   handleSubmit(event) {
@@ -39,23 +45,23 @@ export default class SettingsPanel extends Component {
   }
 
   handleCitiesChange(event) {
-    this.setState({numberOfCities: event.target.value});
+    this.setState({numberOfCities: parseInt(event.target.value)});
   }
 
   handleGenerationsChange(event) {
-    this.setState({numberOfGenerations: event.target.value});
+    this.setState({numberOfGenerations: parseInt(event.target.value)});
   }
 
   handlePopulationSizeChange(event) {
-    this.setState({populationSize: event.target.value});
+    this.setState({populationSize: parseInt(event.target.value)});
   }
 
   handleMutationRateChange(event) {
-    this.setState({mutationRate: event.target.value});
+    this.setState({mutationRate: parseInt(event.target.value)});
   }
 
   handleSelectionSizeChange(event) {
-    this.setState({selectionSize: event.target.value});
+    this.setState({selectionSize: parseInt(event.target.value)});
   }
 
   handleElitismChange(event) {

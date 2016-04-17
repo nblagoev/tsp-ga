@@ -12,7 +12,7 @@ import ContextMenu from './menus/context-menu.json';
 import City from './tsp/city';
 import Population from './tsp/population';
 import TourManager from './tsp/tour-manager';
-import {evolvePopulation} from './tsp/genetic-algorithm';
+import GeneticAlgorithm from './tsp/genetic-algorithm';
 
 (() => {
 
@@ -48,10 +48,11 @@ import {evolvePopulation} from './tsp/genetic-algorithm';
   let population = new Population(50, true);
   console.log("Initial distance: " + population.getFittest().getDistance());
 
+  let ga = new GeneticAlgorithm();
   // Evolve population for 100 generations
-  population = evolvePopulation(population);
+  population = ga.evolvePopulation(population);
   for (let i = 0; i < 100; i++) {
-      population = evolvePopulation(population);
+      population = ga.evolvePopulation(population);
   }
 
   // Print final results
@@ -64,11 +65,6 @@ import {evolvePopulation} from './tsp/genetic-algorithm';
 (() => {
   const store = configureStore({
     settings: {
-      numberOfGenerations: 100,
-      populationSize: 50,
-      mutationRate: 0.015,
-      selectionSize: 5,
-      elitismEnabled: true,
       limitX: 500,
       limitY: 500
     }

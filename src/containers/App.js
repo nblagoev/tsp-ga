@@ -14,7 +14,7 @@ import City from '../tsp/city';
 export default class App extends Component {
   static propTypes = {
     cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
-    evolvedPopulation: PropTypes.instanceOf(Population),//.isRequired,
+    evolvedPopulation: PropTypes.object.isRequired,
     settings: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   }
