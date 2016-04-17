@@ -24,10 +24,10 @@ export default class App extends Component {
     return (
       <div className="container">
       	<div className="row">
-      		<div className="col-md-9 mainContainer">
+      		<div className="col-md-7 mainContainer">
       			<CityMap cities={cities} evolvedPopulation={evolvedPopulation} settings={settings} />
       		</div>
-          <div className="col-md-3">
+          <div className="col-md-5">
       			<SettingsPanel settings={settings} actions={actions} />
       		</div>
       	</div>

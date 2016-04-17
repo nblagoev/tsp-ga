@@ -64,7 +64,6 @@ import {evolvePopulation} from './tsp/genetic-algorithm';
 (() => {
   const store = configureStore({
     settings: {
-      numberOfCities: 20,
       numberOfGenerations: 100,
       populationSize: 50,
       mutationRate: 0.015,
