@@ -20,6 +20,7 @@ export default function population(state = {}, action) {
       //result.evolvedPopulation = evolvedPopulation;
       result.finalDistance = population.getFittest().getDistance();
       result.solution = population.getFittest();
+      console.log(result);
       return result;
     } case RESET_POPULATION: {
       return {};

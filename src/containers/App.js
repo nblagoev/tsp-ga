@@ -8,6 +8,7 @@ import * as PopulationActions from '../actions/population';
 
 import CityMap from '../components/CityMap';
 import SettingsPanel from '../components/SettingsPanel';
+import ResultsPanel from '../components/ResultsPanel';
 import Population from '../tsp/population';
 import City from '../tsp/city';
 
@@ -29,6 +30,7 @@ export default class App extends Component {
       		</div>
           <div className="col-md-5">
       			<SettingsPanel cities={cities} settings={settings} actions={actions} />
+            <ResultsPanel evolvedPopulation={evolvedPopulation} />
       		</div>
       	</div>
       </div>
