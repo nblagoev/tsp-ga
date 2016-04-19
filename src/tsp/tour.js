@@ -1,5 +1,4 @@
 
-import TourManager from './tour-manager';
 import {knuthShuffle as shuffle} from 'knuth-shuffle';
 import _ from 'lodash';
 

@@ -1,4 +1,5 @@
 const EVOLVE_POPULATION = 'EVOLVE_POPULATION';
+const RESET_POPULATION = 'RESET_POPULATION';
 
 const evolvePopulation = (
   generations,
@@ -17,4 +18,8 @@ const evolvePopulation = (
   cities,
 });
 
-export { EVOLVE_POPULATION, evolvePopulation };
+const resetPopulation = () => ({
+  type: RESET_POPULATION,
+});
+
+export { EVOLVE_POPULATION, RESET_POPULATION, evolvePopulation, resetPopulation };

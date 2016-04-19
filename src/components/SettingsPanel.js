@@ -30,6 +30,7 @@ export default class SettingsPanel extends Component {
       this.props.settings.limitX - 2,
       this.props.settings.limitY - 2,
     );
+    this.props.actions.resetPopulation();
   }
 
   evolvePopulation() {

@@ -1,4 +1,4 @@
-import { EVOLVE_POPULATION } from '../actions/population';
+import { EVOLVE_POPULATION, RESET_POPULATION } from '../actions/population';
 import Population from '../tsp/population';
 import GeneticAlgorithm from '../tsp/genetic-algorithm';
 
@@ -21,6 +21,8 @@ export default function population(state = {}, action) {
       result.finalDistance = population.getFittest().getDistance();
       result.solution = population.getFittest();
       return result;
+    } case RESET_POPULATION: {
+      return {};
     } default: {
       return state;
     }
