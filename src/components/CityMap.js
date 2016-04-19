@@ -45,9 +45,13 @@ export default class CityMap extends Component {
 
   render() {
     return (
-      <canvas ref={(ref) => this.canvas = ref}
-              width={this.props.settings.limitX}
-              height={this.props.settings.limitY}/>
+      <div className="panel panel-default">
+        <div className="panel-body">
+          <canvas ref={(ref) => this.canvas = ref}
+                  width={this.props.settings.limitX}
+                  height={this.props.settings.limitY}/>
+        </div>
+      </div>
     );
   }
 }

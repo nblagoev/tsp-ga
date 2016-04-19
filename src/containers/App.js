@@ -28,7 +28,7 @@ export default class App extends Component {
       		<div className="col-md-7 mainContainer">
       			<CityMap cities={cities} evolvedPopulation={evolvedPopulation} settings={settings} />
       		</div>
-          <div className="col-md-5">
+          <div className="col-md-5 mainContainer">
       			<SettingsPanel cities={cities} settings={settings} actions={actions} />
             <ResultsPanel evolvedPopulation={evolvedPopulation} />
       		</div>
