@@ -45,7 +45,9 @@ export default class App extends Component {
         population = ga.evolvePopulation(population);
         result.finalDistance = population.getFittest().getDistance();
         result.solution = population.getFittest();
-        this.setState({solution: result, evolveEnabled: false, percentComplete});
+        if (Math.ceil(i + 1) % 20 == 0) {
+          this.setState({solution: result, evolveEnabled: false, percentComplete});
+        }
       }, delay);
 
       setTimeout(() => {this.setState({evolveEnabled: true})}, 500);
