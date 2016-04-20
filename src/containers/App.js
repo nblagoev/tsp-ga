@@ -24,7 +24,8 @@ export default class App extends Component {
     super(props, context);
     this.state = {
       solution: {},
-      evolveEnabled: true
+      evolveEnabled: true,
+      percentComplete: 0
     };
   }
 
@@ -40,20 +41,19 @@ export default class App extends Component {
     population = ga.evolvePopulation(population);
     for (let i = 0; i < options.numberOfGenerations; i++) {
       setTimeout(() => {
-        console.log(i);
+        let percentComplete = Math.ceil((i + 1) / options.numberOfGenerations * 100);
         population = ga.evolvePopulation(population);
         result.finalDistance = population.getFittest().getDistance();
         result.solution = population.getFittest();
-        this.setState({solution: result, evolveEnabled: false});
+        this.setState({solution: result, evolveEnabled: false, percentComplete});
       }, delay);
 
       setTimeout(() => {this.setState({evolveEnabled: true})}, 500);
-
     }
   }
 
   handleOnReset() {
-    this.setState({solution: {}});
+    this.setState({solution: {}, percentComplete: 0, evolveEnabled: true});
   }
 
   render() {
@@ -62,7 +62,8 @@ export default class App extends Component {
       <div className="container">
       	<div className="row">
       		<div className="col-md-7 mainContainer">
-      			<CityMap cities={cities} evolvedPopulation={this.state.solution} settings={settings} />
+      			<CityMap cities={cities} evolvedPopulation={this.state.solution}
+                     settings={settings} percentComplete={this.state.percentComplete}/>
       		</div>
           <div className="col-md-5 mainContainer">
       			<SettingsPanel cities={cities} settings={settings} actions={actions}

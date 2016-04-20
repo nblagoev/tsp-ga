@@ -6,6 +6,7 @@ export default class CityMap extends Component {
   static propTypes = {
     cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
     evolvedPopulation: PropTypes.object.isRequired,
+    percentComplete: PropTypes.number.isRequired,
     settings: PropTypes.object.isRequired,
   };
 
@@ -44,12 +45,19 @@ export default class CityMap extends Component {
   }
 
   render() {
+    const {percentComplete, settings} = this.props;
     return (
       <div className="panel panel-default">
         <div className="panel-body">
           <canvas ref={(ref) => this.canvas = ref}
-                  width={this.props.settings.limitX}
-                  height={this.props.settings.limitY}/>
+                  width={settings.limitX}
+                  height={settings.limitY}/>
+          <div className="progress" style={{margin: 0 + 'px'}}>
+            <div className="progress-bar" role="progressbar" aria-valuenow={percentComplete}
+            aria-valuemin="0" aria-valuemax="100" style={{width:percentComplete + '%'}}>
+              <span className="sr-only">{percentComplete}% Complete</span>
+            </div>
+          </div>
         </div>
       </div>
     );

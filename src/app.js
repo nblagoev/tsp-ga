@@ -39,7 +39,7 @@ import ContextMenu from './menus/context-menu.json';
   const store = configureStore({
     settings: {
       limitX: 500,
-      limitY: 500
+      limitY: 461
     }
   });
   ReactDOM.render(
