@@ -9,28 +9,66 @@ import * as PopulationActions from '../actions/population';
 import CityMap from '../components/CityMap';
 import SettingsPanel from '../components/SettingsPanel';
 import ResultsPanel from '../components/ResultsPanel';
+import GeneticAlgorithm from '../tsp/genetic-algorithm';
 import Population from '../tsp/population';
 import City from '../tsp/city';
 
 export default class App extends Component {
   static propTypes = {
     cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
-    evolvedPopulation: PropTypes.object.isRequired,
     settings: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   }
 
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      solution: {},
+      evolveEnabled: true
+    };
+  }
+
+  handleOnEvolve(options) {
+    let result = {};
+    let delay = (options.numberOfGenerations < 500) ? 350 : 75;
+    let ga = new GeneticAlgorithm(options.mutationRate, options.selectionSize, options.elitismEnabled);
+    ga.setCities(this.props.cities);
+    let population = new Population(options.populationSize, true, this.props.cities);
+
+    result.initialDistance = population.getFittest().getDistance();
+
+    population = ga.evolvePopulation(population);
+    for (let i = 0; i < options.numberOfGenerations; i++) {
+      setTimeout(() => {
+        console.log(i);
+        population = ga.evolvePopulation(population);
+        result.finalDistance = population.getFittest().getDistance();
+        result.solution = population.getFittest();
+        this.setState({solution: result, evolveEnabled: false});
+      }, delay);
+
+      setTimeout(() => {this.setState({evolveEnabled: true})}, 500);
+
+    }
+  }
+
+  handleOnReset() {
+    this.setState({solution: {}});
+  }
+
   render() {
-    const { cities, evolvedPopulation, settings, actions } = this.props;
+    const { cities, settings, actions } = this.props;
     return (
       <div className="container">
       	<div className="row">
       		<div className="col-md-7 mainContainer">
-      			<CityMap cities={cities} evolvedPopulation={evolvedPopulation} settings={settings} />
+      			<CityMap cities={cities} evolvedPopulation={this.state.solution} settings={settings} />
       		</div>
           <div className="col-md-5 mainContainer">
-      			<SettingsPanel cities={cities} settings={settings} actions={actions} />
-            <ResultsPanel evolvedPopulation={evolvedPopulation} />
+      			<SettingsPanel cities={cities} settings={settings} actions={actions}
+                           onEvolve={(options) => {this.handleOnEvolve(options); }}
+                           onReset={() => { this.handleOnReset(); }} evolveEnabled={this.state.evolveEnabled}/>
+            <ResultsPanel evolvedPopulation={this.state.solution} />
       		</div>
       	</div>
       </div>
@@ -47,7 +85,6 @@ function mapStateToProps(state) {
   return {
     settings: state.settings,
     cities: state.cities,
-    evolvedPopulation: state.evolvedPopulation,
   };
 }
 
@@ -63,7 +100,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       //Object.assign({}, SettingsActions, CityActions, PopulationActions),
-      { ...SettingsActions, ...CityActions, ...PopulationActions },
+      { ...SettingsActions, ...CityActions },
       dispatch
     )
   };

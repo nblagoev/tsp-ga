@@ -7,9 +7,11 @@ import City from '../tsp/city';
 
 export default class SettingsPanel extends Component {
   static propTypes = {
-    cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
     settings: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    onEvolve: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired,
+    evolveEnabled: PropTypes.bool.isRequired,
   };
 
   constructor(props, context) {
@@ -30,18 +32,12 @@ export default class SettingsPanel extends Component {
       this.props.settings.limitX - 2,
       this.props.settings.limitY - 2,
     );
-    this.props.actions.resetPopulation();
+
+    this.props.onReset();
   }
 
   evolvePopulation() {
-    this.props.actions.evolvePopulation(
-      this.state.numberOfGenerations,
-      this.state.populationSize,
-      this.state.mutationRate,
-      this.state.selectionSize,
-      this.state.elitismEnabled,
-      this.props.cities
-    );
+    this.props.onEvolve(this.state);
   }
 
   handleSubmit(event) {
@@ -99,7 +95,8 @@ export default class SettingsPanel extends Component {
             <CheckboxGroup id="elitismCheck" label="Enable Elitism" checked={this.state.elitismEnabled}
                            onChange={(event) => {this.handleElitismChange(event);}}/>
 
-            <SuccessButtonGroup id="evolveBtn" label="Evolve" onClick={() => {this.evolvePopulation();}}/>
+            <SuccessButtonGroup id="evolveBtn" label="Evolve" enabled={this.props.evolveEnabled}
+                                onClick={() => {this.evolvePopulation();}}/>
 
           </fieldset>
         </form>

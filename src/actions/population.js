@@ -2,7 +2,7 @@ const EVOLVE_POPULATION = 'EVOLVE_POPULATION';
 const RESET_POPULATION = 'RESET_POPULATION';
 
 const evolvePopulation = (
-  generations,
+  population,
   populationSize,
   mutationRate,
   selectionSize,
@@ -10,7 +10,7 @@ const evolvePopulation = (
   cities
 ) => ({
   type: EVOLVE_POPULATION,
-  generations,
+  population,
   populationSize,
   mutationRate,
   selectionSize,
