@@ -17,8 +17,8 @@ export default class SettingsPanel extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      numberOfCities: 20,
-      numberOfGenerations: 100,
+      numberOfCities: 75,
+      numberOfGenerations: 600,
       populationSize: 50,
       mutationRate: 0.015,
       selectionSize: 5,
@@ -57,7 +57,12 @@ export default class SettingsPanel extends Component {
   }
 
   handleMutationRateChange(event) {
-    this.setState({mutationRate: parseInt(event.target.value)});
+    if (event.target.value.endsWith(".")) {
+      this.setState({mutationRate: event.target.value});
+      return;
+    }
+
+    this.setState({mutationRate: parseFloat(event.target.value)});
   }
 
   handleSelectionSizeChange(event) {

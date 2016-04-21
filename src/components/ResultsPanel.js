@@ -9,10 +9,6 @@ export default class ResultsPanel extends Component {
     super(props, context);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-  }
-
   render() {
     return (
       <div className="clearfix">

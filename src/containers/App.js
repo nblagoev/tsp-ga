@@ -50,7 +50,7 @@ export default class App extends Component {
         }
       }, delay);
 
-      setTimeout(() => {this.setState({evolveEnabled: true})}, 500);
+      setTimeout(() => {this.setState({evolveEnabled: true, percentComplete: 100})}, 500);
     }
   }
 
