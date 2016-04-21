@@ -17,7 +17,7 @@ export default class App extends Component {
     this.state = {
       cities: [],
       solution: {},
-      evolveEnabled: true,
+      editingEnabled: true,
       percentComplete: 0
     };
   }
@@ -49,16 +49,16 @@ export default class App extends Component {
         result.finalDistance = population.getFittest().getDistance();
         result.solution = population.getFittest();
         if (Math.ceil(i + 1) % 20 == 0) {
-          this.setState({solution: result, evolveEnabled: false, percentComplete});
+          this.setState({solution: result, editingEnabled: false, percentComplete});
         }
       }, delay);
 
-      setTimeout(() => {this.setState({evolveEnabled: true, percentComplete: 100})}, 500);
+      setTimeout(() => {this.setState({editingEnabled: true, percentComplete: 100})}, 500);
     }
   }
 
   handleOnReset() {
-    this.setState({solution: {}, percentComplete: 0, evolveEnabled: true});
+    this.setState({solution: {}, percentComplete: 0, editingEnabled: true});
   }
 
   render() {
@@ -70,7 +70,7 @@ export default class App extends Component {
                      settings={this.props.settings} percentComplete={this.state.percentComplete}/>
       		</div>
           <div className="col-md-5 mainContainer">
-      			<SettingsPanel evolveEnabled={this.state.evolveEnabled}
+      			<SettingsPanel editingEnabled={this.state.editingEnabled}
                            onGenerate={(n) => {this.handleOnGenerate(n);}}
                            onEvolve={(options) => {this.handleOnEvolve(options); }}
                            onReset={() => { this.handleOnReset(); }} />
