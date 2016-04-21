@@ -1,10 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import * as CityActions from '../actions/cities';
-import * as SettingsActions from '../actions/settings';
-import * as PopulationActions from '../actions/population';
 
 import CityMap from '../components/CityMap';
 import SettingsPanel from '../components/SettingsPanel';
@@ -15,26 +9,35 @@ import City from '../tsp/city';
 
 export default class App extends Component {
   static propTypes = {
-    cities: PropTypes.arrayOf(PropTypes.instanceOf(City)).isRequired,
-    settings: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired
   }
 
   constructor(props, context) {
     super(props, context);
     this.state = {
+      cities: [],
       solution: {},
       evolveEnabled: true,
       percentComplete: 0
     };
   }
 
+  handleOnGenerate(numberOfCities) {
+    let {settings} = this.props;
+    let result = [];
+    for (let i = 0; i < numberOfCities; i++) {
+      result.push(new City(settings.limitX, settings.limitY));
+    }
+
+    this.setState({cities: result});
+  }
+
   handleOnEvolve(options) {
     let result = {};
     let delay = (options.numberOfGenerations < 500) ? 350 : 75;
     let ga = new GeneticAlgorithm(options.mutationRate, options.selectionSize, options.elitismEnabled);
-    ga.setCities(this.props.cities);
-    let population = new Population(options.populationSize, true, this.props.cities);
+    ga.setCities(this.state.cities);
+    let population = new Population(options.populationSize, true, this.state.cities);
 
     result.initialDistance = population.getFittest().getDistance();
 
@@ -59,18 +62,18 @@ export default class App extends Component {
   }
 
   render() {
-    const { cities, settings, actions } = this.props;
     return (
       <div className="container">
       	<div className="row">
       		<div className="col-md-7 mainContainer">
-      			<CityMap cities={cities} evolvedPopulation={this.state.solution}
-                     settings={settings} percentComplete={this.state.percentComplete}/>
+      			<CityMap cities={this.state.cities} evolvedPopulation={this.state.solution}
+                     settings={this.props.settings} percentComplete={this.state.percentComplete}/>
       		</div>
           <div className="col-md-5 mainContainer">
-      			<SettingsPanel cities={cities} settings={settings} actions={actions}
+      			<SettingsPanel evolveEnabled={this.state.evolveEnabled}
+                           onGenerate={(n) => {this.handleOnGenerate(n);}}
                            onEvolve={(options) => {this.handleOnEvolve(options); }}
-                           onReset={() => { this.handleOnReset(); }} evolveEnabled={this.state.evolveEnabled}/>
+                           onReset={() => { this.handleOnReset(); }} />
             <ResultsPanel evolvedPopulation={this.state.solution} />
       		</div>
       	</div>
@@ -78,46 +81,3 @@ export default class App extends Component {
     );
   }
 }
-
-/**
- * Keep in mind that 'state' isn't the state of local object, but your single
- * state in this Redux application. 'cities' is a property within our store/state
- * object. By mapping it to props, we can pass it to the child component CityMap.
- */
-function mapStateToProps(state) {
-  return {
-    settings: state.settings,
-    cities: state.cities,
-  };
-}
-
-/**
- * Turns an object whose values are 'action creators' into an object with the same
- * keys but with every action creator wrapped into a 'dispatch' call that we can invoke
- * directly later on. Here we imported the actions specified in 'CityActions.js' and
- * used the bindActionCreators function Redux provides us.
- *
- * More info: http://redux.js.org/docs/api/bindActionCreators.html
- */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(
-      //Object.assign({}, SettingsActions, CityActions, PopulationActions),
-      { ...SettingsActions, ...CityActions },
-      dispatch
-    )
-  };
-}
-
-/**
- * 'connect' is provided to us by the bindings offered by 'react-redux'. It simply
- * connects a React component to a Redux store. It never modifies the component class
- * that is passed into it, it actually returns a new connected componet class for use.
- *
- * More info: https://github.com/rackt/react-redux
- */
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);

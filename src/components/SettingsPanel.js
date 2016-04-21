@@ -7,8 +7,6 @@ import City from '../tsp/city';
 
 export default class SettingsPanel extends Component {
   static propTypes = {
-    settings: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
     onEvolve: PropTypes.func.isRequired,
     onReset: PropTypes.func.isRequired,
     evolveEnabled: PropTypes.bool.isRequired,
@@ -27,12 +25,7 @@ export default class SettingsPanel extends Component {
   }
 
   generateCities() {
-    this.props.actions.generateCities(
-      this.state.numberOfCities,
-      this.props.settings.limitX - 2,
-      this.props.settings.limitY - 2,
-    );
-
+    this.props.onGenerate(this.state.numberOfCities);
     this.props.onReset();
   }
 

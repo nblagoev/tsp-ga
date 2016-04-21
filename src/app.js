@@ -5,12 +5,10 @@ import remote from 'remote';
 import webFrame from 'web-frame';
 import {ipcRenderer} from 'electron';
 
-import { configureStore } from './store/configureStore';
-import Root from './containers/Root';
+import App from './containers/App';
 import ContextMenu from './menus/context-menu.json';
 
 (() => {
-
   let contextMenu = _.cloneDeep(ContextMenu);
   const menu = remote.require('menu').buildFromTemplate(contextMenu);
 
@@ -36,14 +34,9 @@ import ContextMenu from './menus/context-menu.json';
 
 // react entry point
 (() => {
-  const store = configureStore({
-    settings: {
-      limitX: 500,
-      limitY: 461
-    }
-  });
+  const settings = { limitX: 500, limitY: 461 };
   ReactDOM.render(
-    <Root store={store} />,
+    <App settings={settings} />,
     document.getElementById('root')
   );
 })();

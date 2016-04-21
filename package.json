@@ -76,9 +76,6 @@
     "parinfer": "^1.7.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.1",
-    "react-redux": "^4.4.5",
-    "redux": "^3.0.0",
-    "redux-thunk": "^2.0.1",
     "yargs": "^3.32.0"
   },
   "repository": {
