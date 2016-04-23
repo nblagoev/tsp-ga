@@ -1,5 +1,5 @@
 {
-  "name": "tsp-electron",
+  "name": "tsp-ga",
   "private": true,
   "version": "1.0.0",
   "description": "A solution to the Travelling Salesman Problem implemented as an Electron app",
