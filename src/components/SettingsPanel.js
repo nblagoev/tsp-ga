@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import NumberInputGroup from './NumberInputGroup';
-import SuccessButtonGroup from './SuccessButtonGroup';
+import EvolveButtonGroup from './EvolveButtonGroup';
 import PrimaryButtonGroup from './PrimaryButtonGroup';
 import CheckboxGroup from './CheckboxGroup';
 import City from '../tsp/city';
@@ -8,6 +8,8 @@ import City from '../tsp/city';
 export default class SettingsPanel extends Component {
   static propTypes = {
     onEvolve: PropTypes.func.isRequired,
+    onGenerate: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
     onReset: PropTypes.func.isRequired,
     editingEnabled: PropTypes.bool.isRequired,
   };
@@ -31,6 +33,10 @@ export default class SettingsPanel extends Component {
 
   evolvePopulation() {
     this.props.onEvolve(this.state);
+  }
+
+  cancel() {
+    this.props.onCancel();
   }
 
   handleSubmit(event) {
@@ -100,8 +106,12 @@ export default class SettingsPanel extends Component {
                            enabled={this.props.editingEnabled}
                            onChange={(event) => {this.handleElitismChange(event);}}/>
 
-            <SuccessButtonGroup id="evolveBtn" label="Evolve" enabled={this.props.editingEnabled}
-                                onClick={() => {this.evolvePopulation();}}/>
+            <EvolveButtonGroup primaryId="evolveBtn" primaryLabel="Evolve"
+                               primaryEnabled={this.props.editingEnabled}
+                               onPrimaryClick={() => {this.evolvePopulation();}}
+                               secondaryId="cancelBtn" secondaryLabel="Cancel"
+                               secondaryEnabled={!this.props.editingEnabled}
+                               onSecondaryClick={() => {this.cancel();}}/>
 
           </fieldset>
         </form>

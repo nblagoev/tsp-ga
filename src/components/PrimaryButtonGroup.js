@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class ButtonGroup extends Component {
+export default class PrimaryButtonGroup extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,

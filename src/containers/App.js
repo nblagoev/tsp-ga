@@ -18,7 +18,8 @@ export default class App extends Component {
       cities: [],
       solution: {},
       editingEnabled: true,
-      percentComplete: 0
+      percentComplete: 0,
+      stopEvolving: false,
     };
   }
 
@@ -44,6 +45,10 @@ export default class App extends Component {
     population = ga.evolvePopulation(population);
     for (let i = 0; i < options.numberOfGenerations; i++) {
       setTimeout(() => {
+        if (this.state.stopEvolving) {
+          this.setState({editingEnabled: true});
+          return;
+        }
         let percentComplete = Math.ceil((i + 1) / options.numberOfGenerations * 100);
         population = ga.evolvePopulation(population);
         result.finalDistance = population.getFittest().getDistance();
@@ -52,13 +57,17 @@ export default class App extends Component {
           this.setState({solution: result, editingEnabled: false, percentComplete});
         }
       }, delay);
-
-      setTimeout(() => {this.setState({editingEnabled: true, percentComplete: 100})}, 500);
     }
+
+    setTimeout(() => {this.setState({editingEnabled: true, percentComplete: 100})}, 500);
   }
 
   handleOnReset() {
     this.setState({solution: {}, percentComplete: 0, editingEnabled: true});
+  }
+
+  handleOnCancel() {
+    this.setState({stopEvolving: true, editingEnabled: true});
   }
 
   render() {
@@ -73,7 +82,8 @@ export default class App extends Component {
       			<SettingsPanel editingEnabled={this.state.editingEnabled}
                            onGenerate={(n) => {this.handleOnGenerate(n);}}
                            onEvolve={(options) => {this.handleOnEvolve(options); }}
-                           onReset={() => { this.handleOnReset(); }} />
+                           onReset={() => { this.handleOnReset(); }}
+                           onCancel={() => { this.handleOnCancel(); }} />
             <ResultsPanel evolvedPopulation={this.state.solution} />
       		</div>
       	</div>
