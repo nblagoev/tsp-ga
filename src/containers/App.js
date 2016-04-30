@@ -34,6 +34,7 @@ export default class App extends Component {
   }
 
   handleOnEvolve(options) {
+    this.setState({stopEvolving: false});
     let result = {};
     let delay = (options.numberOfGenerations < 500) ? 350 : 75;
     let ga = new GeneticAlgorithm(options.mutationRate, options.selectionSize, options.elitismEnabled);
