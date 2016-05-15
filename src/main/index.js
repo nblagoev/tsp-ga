@@ -162,8 +162,8 @@ ipc.on('application:message-box', function(event, options) {
 function onReady(fun) {
   let {width, height} = require('screen').getPrimaryDisplay().workAreaSize;
   let options = {
-    width: Math.floor(width * 0.75),
-    height: Math.floor(height * 0.75),
+    width: Math.floor(width * 0.75) + 30,
+    height: Math.floor(height * 0.75) + 30,
     minHeight: Math.floor(height * 0.5),
     minWidth: Math.floor(width * 0.5),
     resizable: true,
